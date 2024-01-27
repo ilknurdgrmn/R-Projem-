@@ -1,0 +1,85 @@
+---
+title: "20211101031_r ödevi_İlknur Değirmenci"
+format: html
+editor: visual
+---
+
+```{r}
+library(readxl)
+data_water<- read_excel("C:/Users/İlknur Değirmenci/Downloads/ilce-baznda-su-tuketim-miktar-2015-2023.xlsx")
+View(data_water)
+
+```
+```{r}
+print("Orijinal Data")
+
+print(data_water)
+ 
+num_cells_to_modify <- 4
+ 
+ 
+for (i in 1:num_cells_to_modify){
+
+  row_index <- sample(1:nrow(data_water), 1)
+
+  col_index <- sample(1:ncol(data_water), 1)
+
+}
+
+cat("Row Index:", row_index, "\n")
+
+cat("Column Index", col_index, "\n")
+ 
+data_water[row_index, col_index] <- NA
+ 
+print("Değiştirilmiş Data")
+
+print(data_water)
+```
+
+```{r}
+library(VIM)
+```
+
+```{r}
+DatawaterImputed <- kNN(data_water, k = 3)
+print(DatawaterImputed)
+```
+
+```{r}
+summary(data_water)
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+# Veri çerçevesi oluşturdum.
+ilceler <- c("Beşiktaş", "Kadıköy", "Şişli", "Beyoğlu", "Üsküdar")
+tüketim_m3 <- c(3558225, 7430698, 4964021, 3868725
+, 6995398)
+
+veri <- data.frame(Ilce = ilceler, Tüketim_m3 = tüketim_m3)
+
+# Çubuk grafik oluşturdum.
+barplot(veri$Tüketim_m3, names.arg = veri$Ilce, col = "skyblue", main = "2023 Tüketim (m3) İlçelere Göre", xlab = "İlçeler", ylab = "Tüketim (m3)")
+
+```
+
+```{r}
+ggplot(data = data_water,
+       mapping = aes(x = İlçe, y = `2022 (Tüketim-m3)`)) +                      # İlçe sütunu için tırnak işareti ekledim
+  geom_point(size = 4) +
+  geom_line(colour = "red")
+
+```
+
+```{r}
+ggplot(data = data_water, aes(x = İlçe, y = `2019 (Tüketim-m3)`, fill = factor(İlçe))) +
+  geom_point(size = 4) +
+  geom_line(colour = "green") +
+  labs(title = "Gruplanmış Nokta ve Çizgi Grafiği", x = "İlçeler", y = "Değerler", fill = "İlçe") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+```
